@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tload</title>
+    <link rel="stylesheet" href="css/indexdos.css">
+</head>
+
+<body>
+    <!--Barra de navegación-->
+    <img class="logo" src="imagenes/tload.jpeg" width="50" height="50">
+    <ul id="button">
+        <li><a href="principal.html">T-LOAD</a></li>
+        <li><a href="perfil.html">Perfil</a></li>
+        <li><a href="cursos.html">Cursos</a></li>
+        <li><a href="avisos.html">Avisos</a></li>
+        <li><a href="calendario.html">Calendario</a></li>
+        <li><a href="index2 copy2.html" onclick="cerrar()">Cerrar Sesión</a></li>
+    </ul>
+
+    <div>
+        <br>
+        <br>
+        <br>
+        <h1 class="titulo">Bienvenido a T-Load</h1>
+        <hr>
+        <h2 class="titulo">¿Qué es T-Load?</h2>
+        <video class="video" width=500 height=300 controls poster="imagenes/fondo2.jpg">
+            <source src="ejemplo.mp4" type="video/mp4">
+        </video>
+        <blockquote>
+            <pre class="titulo">Se enfoca en brindar un servicio de gestor documentario, por medio de
+una página web y asi mismo cómo los usuarios necesitan de este servicio. 
+            </pre>
+        </blockquote>
+        
+        
+    </div>
+</body>
+<script>
+    function cerrar(){
+    firebase.auth().signOut() 
+        
+        
+    .catch(function (error) {
+        alert("F");
+    })};
+</script>
+
+</html>

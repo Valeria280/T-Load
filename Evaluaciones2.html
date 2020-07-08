@@ -1,0 +1,156 @@
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Tload</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+         
+        <link rel="stylesheet" href="css/indexdos.css">
+        <link rel="stylesheet" href="css/curso.css">   
+    </head>
+    <body>
+        <!--Barra de navegación-->
+        <img class="logo" src="imagenes/tload.jpeg" width="50" height="50">
+        <ul id="button">
+            <li><a href="principal.html">T-LOAD</a></li>
+            <li><a href="perfil.html">Perfil</a></li>
+            <li><a href="cursos.html">Cursos</a></li>
+            <li><a href="avisos.html">Avisos</a></li>
+            <li><a href="calendario.html">Calendario</a></li>
+            <li><a href="index2 copy2.html" onclick="cerrar()">Cerrar Sesión</a></li>
+        </ul>
+        <br>
+        <div id="sidebar" class="active">
+            <div class="toggle-btn">
+                <span>&#9776;</span>
+            </div>
+            <ul>
+                <li><a href="Evaluaciones1.html" style="text-decoration: none;"><font color="white">CURSO1</font></a></li>
+                <li><a href="Evaluaciones2.html" style="text-decoration: none;"><font color="white">CURSO2</font></a></li>
+                <li><a href="Evaluaciones3.html" style="text-decoration: none;"><font color="white">CURSO3</font></a></li>
+            </ul>
+        </div>
+        
+        <div class="contenedor">
+            <div id="visorArchivo">
+
+            </div>
+            <progress value="0" max="100" id="uploader" class="progreso">0%</progress>
+            <div id="div_file">
+                <p id="parrafo">Add file</p>
+                <input type="file"  value="upload" id="fileButton"  onchange="return validarText()">
+            </div>
+        </div>
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+          
+    </body>
+    <script>
+        const btnToggle = document.querySelector('.toggle-btn');
+
+        btnToggle.addEventListener('click',function(){
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+    </script>
+    <script>
+        // Initialize Firebase
+        var firebaseConfig = {
+    apiKey: "AIzaSyDpmfCCiJxOrF1sdBuDDDGw48wVrJrxZ5g",
+    authDomain: "t-load-c618b.firebaseapp.com",
+    databaseURL: "https://t-load-c618b.firebaseio.com",
+    projectId: "t-load-c618b",
+    storageBucket: "t-load-c618b.appspot.com",
+    messagingSenderId: "15961119407",
+    appId: "1:15961119407:web:f823c5591b42958052125a",
+    measurementId: "G-WY0TSSWSYE"
+  };
+  // Initialize Firebase
+  
+  proy=firebase.initializeApp(firebaseConfig);
+        // Obtener Elementos
+        var uploader = document.getElementById('uploader');
+        var fileButton = document.getElementById('fileButton');
+  
+        // Vigilar selección archivo
+        fileButton.addEventListener('change', function(e) {
+          //Obtener archivo
+          var file = e.target.files[0];
+  
+          // Crear un storage ref
+          var storageRef = firebase.storage().ref('CURSO2/Evaluacion2/' + file.name);
+  
+  
+          // Subir archivo
+          var task = storageRef.put(file);
+  
+          // Actualizar barra progreso
+          task.on('state_changed',
+  
+            function progress(snapshot) {
+              var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              uploader.value = percentage;
+            },
+  
+            function error(err) {
+  
+            },
+
+            function complete() {
+  
+            }
+
+            )
+  
+        });
+  
+  
+  
+  
+  
+  
+  
+  
+      </script>
+  
+
+   
+    <script>
+
+
+
+        function cerrar(){
+        firebase.auth().signOut() 
+            
+            
+        .catch(function (error) {
+            alert("F");
+        })};
+
+    </script>
+    <script type="text/javascript">
+        function validarText(){
+            var archivoInput = document.getElementById('fileButton');
+            var archivoRuta = archivoInput.value;
+            var extPermitidas = /(.docx)$/i;
+            if(!extPermitidas.exec(archivoRuta)){
+                alert('Asegurece que sea pdf');
+                archivoInput.value="";
+                return false;
+            }
+            else{
+                if(archivoInput.files && archivoInput.files[0]){
+                    var visor= new FileReader();
+                    visor.onload = function(e){
+                        document.getElementById('visorArchivo').innerHTML=
+                        '<embed src="'+e.target.result+'" width="500" height="375"/>';  
+                    };
+                    visor.readAsDataURL(archivoInput.files[0]);
+                }
+            }
+        }
+
+    </script>
+
+
+</script>
+</html>

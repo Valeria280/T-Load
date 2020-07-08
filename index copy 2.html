@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>T-Load</title>
+    <link rel="stylesheet" href="css/indexdos.css">
+</head>
+<body>
+    <h1>Crear usuario</h1>
+    <input type="email" id="email" placeholder="Ingrese su email"/>
+    <input type="password" id="pass" placeholder="Ingrese su contraseña"/>
+    <button onclick="enviar()">Enviar</button>
+
+
+    <h1>Iniciar sesión</h1>
+    <input type="email" id="emailA" placeholder="Ingrese su email"/>
+    <input type="password" id="passA" placeholder="Ingrese su contraseña"/>
+    <button onclick="acceso()">Enviar</button>
+    <h1 id="login"> </h1>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-auth.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDpmfCCiJxOrF1sdBuDDDGw48wVrJrxZ5g",
+    authDomain: "t-load-c618b.firebaseapp.com",
+    databaseURL: "https://t-load-c618b.firebaseio.com",
+    projectId: "t-load-c618b",
+    storageBucket: "t-load-c618b.appspot.com",
+    messagingSenderId: "15961119407",
+    appId: "1:15961119407:web:f823c5591b42958052125a",
+    measurementId: "G-WY0TSSWSYE"
+  };
+  // Initialize Firebase
+  
+  proy=firebase.initializeApp(firebaseConfig);
+  
+  // validar si el usuario está registrado
+
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    var displayName = user.displayName;
+    var email = user.email;
+    var emailVerified = user.emailVerified;
+    var photoURL = user.photoURL;
+    var isAnonymous = user.isAnonymous;
+    var uid = user.uid;
+    var providerData = user.providerData;
+    document.getElementById('login').innerHTML="Logueado "+user.email;
+    console.log(user);
+  } else {
+    document.getElementById('login').innerHTML="No Logueado ";
+  }
+  });
+
+  //EL JS
+
+function enviar(){
+    
+    var email=document.getElementById('email').value;
+    var pass=document.getElementById('pass').value;
+    firebase.auth().createUserWithEmailAndPassword(email, pass)
+    .catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    alert(errorMessage);
+    });
+
+  
+}
+function acceso(){
+        var emailA=document.getElementById('emailA').value;
+        var passA=document.getElementById('passA').value;
+        firebase.auth().signInWithEmailAndPassword(emailA, passA)
+        .catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert(errorMessage);
+        });
+   }
+
+  
+ 
+</script>
+</body>
+</html> 
